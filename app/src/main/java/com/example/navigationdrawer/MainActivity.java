@@ -1,5 +1,7 @@
 package com.example.navigationdrawer;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -32,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                /*
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                        .setAction("Action", null).show(); */
+                enviarEmail();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -50,7 +55,28 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
+    public void enviarEmail() {
+        String celular = "tel:51999442491";
+        String email="contato@calcolarecontabilidade.com.br";
+        //String imagem = "endereço de imagem ou endereço google maps";
 
+        //Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(celular));
+        //Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(celular));
+        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(imagem)); // irá abrir o browser do celular com a imagem ou endereço google maps
+        //startActivity(intent);
+
+        Intent  intent = new Intent(Intent.ACTION_SEND); //compartilhar
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+        intent.putExtra(Intent.EXTRA_SUBJECT, new String[]{"Contato"});
+        intent.setType("message/rfc822"); // tipo para envio de email //procurar google por mime-types
+        intent.setType("text/plain"); //
+        //intent.setType("image/*"); //
+        //intent.setType("application"); //
+
+
+        startActivity(intent.createChooser(intent,"Contato"));
+
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
